@@ -25,6 +25,9 @@ public class playerController : MonoBehaviour {
         if(grounded && input.GetAxis("jump")>0){
             grounded = false;
             myAnim.setBool("grounded",grounded);
+        //here add a new parameter float "yVelocity " use to check if rufus is raising or falling
+        // if(myRB.velocity >0){myAnim.setFloat(yVelocity,yVelocity)}
+        //set myRB.velocity as a variable 
             myRB.addForce(new vector3(0.jumpheight,0));
         }           
     
