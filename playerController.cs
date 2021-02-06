@@ -1,8 +1,14 @@
 using UnityEngine;
 using System.Collections;
+
 public class playerController : MonoBehaviour {
+    //global variables
+    Animator myAnim;
+    Rigidbody myRB;
+
     //for jump
-    //create empty object "checkGroundLocation" and add it to rufus feets(make a tag)
+    //create empty object "checkGroundLocation" and add it to rufus(make a tag)
+    //create a ground layer in the inspector and add it to the floor obj
     bool grounded=false; 
     Collider[] groundCollision; //adding a collision detect
     float groundCheckRadius = 0,2f;
@@ -15,10 +21,25 @@ public class playerController : MonoBehaviour {
         
     }
     void FixedUpdate() {
-        //for jump           ·add circle       ·call the check position ·have a radius  ·check is it grounded.
+    //for jumping
+        if(grounded && input.GetAxis("jump")>0){
+            grounded = false;
+            myAnim.setBool("grounded",grounded);
+            myRB.addForce(new vector3(0.jumpheight,0));
+        }           
+    
+                        //·add circle       ·call the check position ·have a radius  ·check is it grounded.
         groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);
-        if(groundCollision>0) grounded
+        if(groundCollision.length>0) grounded = true; //if GC detect GL set parameter true
+
+        else grounded = false;
+                       //·parameter ·variable
+        myAnim.setBool("grounded",grounded); 
 
     }
 
-}
+}  
+
+
+
+
