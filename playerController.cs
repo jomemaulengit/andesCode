@@ -16,16 +16,23 @@ public class playerController : MonoBehaviour {
     public Transform groundCheck; // drop "checkGorundLocation" here
     public float jumpHeight;
 
+	//Timers
+	private float timer;
+
 
     void Start() {
 		myAnim=GetComponent<Animator>();
 		myRB=GetComponent<Rigidbody>();
         
     }
+	void Update(){
+		Debug.Log (timer);
+	}
     void FixedUpdate() {
     //for jumping
-        if(grounded && Input.GetAxis("Jump")>0){
+        if(grounded && Input.GetKey(KeyCode.S)){
             grounded = false;
+			timer=timer*Time.deltaTime;
             myAnim.SetBool("grounded",grounded);
         //here add a new parameter float "yVelocity " use to check if rufus is raising or falling
         // if(myRB.velocity >0){myAnim.setFloat(yVelocity,yVelocity)}
@@ -33,7 +40,10 @@ public class playerController : MonoBehaviour {
 			myRB.AddForce(new Vector3(0,jumpHeight,0));
         }
 
-    
+		if (grounded == true) {
+			timer=1;
+		}
+
                         //·add circle       ·call the check position ·have a radius  ·check is it grounded.
         groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);
         if(groundCollision.Length>0) grounded = true; //if GC detect GL set parameter true
