@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class menucamera : MonoBehaviour
 {
-    public float speed;
+    float speed=1;
+    float yoffset;
+    public float ypos;
+    public GameObject target;
 
     // Update is called once per frame
     void FixedUpdate()
-    {  
-        transform.position= new Vector3(transform.position.x+speed,transform.position.y,transform.position.z);
+    { 
+        yoffset=target.transform.position.y;        
+        speed=target.transform.position.x; 
+        transform.position= new Vector3(speed,ypos+yoffset*0.2f,transform.position.z);
 
     }
 }

@@ -26,9 +26,8 @@ public class playerControl : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-        //debug
 		//for move forward
-		//myRB.velocity = new Vector3 (speed, myRB.velocity.y, 0);
+		myRB.velocity = new Vector3 (speed, myRB.velocity.y, 0);
 
 		//for collisions
 		groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);

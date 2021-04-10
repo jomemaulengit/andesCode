@@ -5,24 +5,16 @@ using System;
 
 public class bGControler : MonoBehaviour
 {
-    public Transform cam;
-    public float length,dis;
-    public float limitDis;
-    float layerDraw;
-    // Start is called before the first frame update
-    void Start()
-    {
-        layerDraw=GetComponent<SpriteRenderer>().sortingOrder;
-        length=GetComponent<SpriteRenderer>().bounds.size.x;
-        limitDis=length*4;
+    public SpriteRenderer length;
+    float paralaxJump;
+
+    void Start(){
+        paralaxJump=length.bounds.size.x;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        dis=cam.position.x-transform.position.x;
-        if(dis>limitDis){
-            transform.position= new Vector3(transform.position.x+length*7,transform.position.y,transform.position.z);
-        }
-    }
-}
+ void OnTriggerEnter(Collider other) {
+ if(other.CompareTag("ground")){
+     other.transform.Translate(paralaxJump*7,0,0);
+  }
+ }
+} 
