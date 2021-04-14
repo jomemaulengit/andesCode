@@ -33,7 +33,7 @@ public class playerControl : MonoBehaviour {
 		groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);
 		if (groundCollision.Length > 0) {
 			grounded = true;
-			timer=0;
+			timer=0;   
 		}
 		else grounded = false;
 		timer += Time.deltaTime;

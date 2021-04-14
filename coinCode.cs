@@ -14,7 +14,7 @@ public class coinCode : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 rotation=new Vector3 (0,0,3);
+        Vector3 rotation=new Vector3 (0,3,0);
         transform.Rotate(rotation);
       
     }

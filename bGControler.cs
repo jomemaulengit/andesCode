@@ -16,5 +16,12 @@ public class bGControler : MonoBehaviour
  if(other.CompareTag("ground")){
      other.transform.Translate(paralaxJump*7,0,0);
   }
+   if (other.CompareTag("coin")){
+     Destroy(other.gameObject);
+ }
+    if (other.CompareTag("periferic")){
+     Destroy(other.gameObject);
+     
+ }
  }
 } 
