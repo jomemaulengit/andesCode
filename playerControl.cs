@@ -11,6 +11,8 @@ public class playerControl : MonoBehaviour {
 	public float jumpHeight;
 	public GameObject camControl;
 
+
+
 	//jump
 	bool grounded=false; 
 	Collider[] groundCollision; 
@@ -26,9 +28,6 @@ public class playerControl : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		//for move forward
-		myRB.velocity = new Vector3 (speed, myRB.velocity.y, 0);
-
 		//for collisions
 		groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);
 		if (groundCollision.Length > 0) {
@@ -39,7 +38,16 @@ public class playerControl : MonoBehaviour {
 		timer += Time.deltaTime;
 		myAnim.SetBool("grounded",grounded);
 
-
+		//for move forward in ground
+		myRB.velocity = new Vector3 (speed, myRB.velocity.y, 0);
+		if (grounded==true)
+		{
+			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
+		}else
+		{
+			transform.localEulerAngles= new Vector3(0,90,0);
+			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ  | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
+		}  
 
 		//jump
 		myAnim.SetFloat("isUp",myRB.velocity.y);
