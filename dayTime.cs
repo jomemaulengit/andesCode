@@ -4,37 +4,78 @@ using UnityEngine;
 
 public class dayTime : MonoBehaviour
 {
+    //sunlight
+    Light myL;
     public float speed;
     public float intsty;
-    Light myL;
-    public Light ambientL;
+    //ambientlight
+    public GameObject ambientL;
+    Light ambL;
     public float ambientY;
+    private float rotationX;
+    public bool[] dayState={true,false,false,false};
 
 void Start(){
     myL=GetComponent<Light>();
+    ambL=ambientL.GetComponent<Light>();
 }
 void FixedUpdate(){
-    Debug.Log(transform.localRotation.x);
+    //console
+    //Debug.Log(rotationX);
+    //sunlight
+    rotationX=transform.localRotation.x;
+    myL.intensity=intsty;
+    ambL.intensity=ambientY; 
     Vector3 rotor= new Vector3(speed,0,0);
     transform.Rotate(rotor);
-    if(transform.localRotation.x>=-0.09f){
-        myL.intensity=intsty;
-        ambientL.intensity=ambientY; 
-        speed=0.008f;
-        if (intsty<=1.2f){
-            intsty=1.2f;
-        }else
-        {
-        intsty-=0.008f;
-        ambientL.color+=(Color.white*1)*speed;
-        }
-    }
-    if(transform.localRotation.x>=0.7f)
+
+
+    //Dawn---------------------------------||  -9f LEA
+    if (rotationX>=-0.08f && dayState[0]==true)
     {
-        transform.localEulerAngles= new Vector3(-260,0,0);
-        speed=0.4f;
-        intsty=5f;
-        ambientY=0.7f;
+            speed=0.01f;
+            dayState[1]=true;
+            dayState[0]=false;       
     }
-  }
+
+    //dayLigth-----------------------------||  7f LEA
+    if (rotationX>=0.06f && dayState[1]==true)
+    {
+            dayState[2]=true;
+            dayState[1]=false;
+    }
+    //nightFall----------------------------||  23f LEA
+    if (rotationX>=0.2f && dayState[2]==true)
+    {
+            dayState[3]=true;
+            dayState[2]=false;
+    }
+
+
+    //nightLiht-----------------------------|| 45f LEA
+    if (rotationX>=0.37f && dayState[3]==true)
+    {
+            dayState[0]=true;
+            dayState[3]=false;
+            if (rotationX>=0.7)
+            {
+                transform.localEulerAngles=new Vector3(-90,0,0);
+            }
+    }
+    //----------------------------------------dayeffects
+    //------------------DAWN------------------------
+    if (dayState[1]==true)
+    {
+        ambL.color+=(Color.white*1)*0.001f;
+        ambientY+=0.00013f;
+        intsty-=0.0017f;
+    }
+    //------------------DAY----------------------------------
+        if (dayState[2]==true)
+    {
+        //ambL.color+=(Color.white*1)*0.001f;
+        ambientY-=0.001f;
+        intsty+=0.001f;
+    }
+   }
 }
