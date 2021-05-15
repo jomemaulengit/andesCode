@@ -11,11 +11,9 @@ public class fade : MonoBehaviour
     public float textAlpha;
     public float fadeSpeed=0.02f;
 
-    // Start is called before the first frame update
     void Start()
     {
         image = GetComponent<Image>();
-        // text =GetComponent<Text>();
         textAlpha=text.color.a;
     }
     IEnumerator FadeIn(){
@@ -44,7 +42,7 @@ public class fade : MonoBehaviour
         if(image.color.a>=0.8f && image.GetComponent<Image>().sprite==target){
             StopCoroutine("FadeOut");
             if(image.color.a>0.8f){
-                text.color= new Color(0,0,0,text.color.a+0.03f); 
+                text.color= new Color(0,0,0,text.color.a+0.06f); 
             }
         }
     }
