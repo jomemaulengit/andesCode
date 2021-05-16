@@ -10,29 +10,31 @@ public class menucamera : MonoBehaviour
     public GameObject canvasImage;
     public Text text;
     //===============================================================
-    float speed=1;
+    float xPlayerPos=1;
     public float zoom;
     public bool isInstantiated=false;
     Vector3 spawnPoint;
     public bool endIntro;
     
-    float yoffset;
+    public float yoffset;
     public float ypos;
-    public float offset;
+    float yPlayerPos;
+    public float xoffset;
     public GameObject target;
     public GameObject train;
     GameObject instantiatedTarget;
-//===================offset zoom coroutine================================
+//===================xoffset zoom coroutine================================
 //===================================================================
     IEnumerator AdjustOffset(){
         for(float g =150f; g>=0f; g-=0.7f){
-            offset-=0.7f;
+            xoffset-=0.7f;
+            yoffset+=0.03f;
             yield return new WaitForSeconds(0.01f);
         }
     }
     IEnumerator Zoom(){
-        for(float j = 280; j>150; j-=0.5f){
-            zoom+=0.5f;
+        for(float j = 280; j>150; j-=0.7f){
+            zoom+=0.7f;
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -44,26 +46,27 @@ public class menucamera : MonoBehaviour
     { 
         if (endIntro==true)
         {
-            //spawn with x offset and zoom
+            //spawn with x xoffset and zoom
             if (isInstantiated==false)
             {
                 spawnPoint=new Vector3(train.transform.position.x-150,target.transform.position.y,target.transform.position.z);
-                offset+=150;
+                xoffset+=150;
                 StartCoroutine("AdjustOffset");
                 StartCoroutine("Zoom");
                 instantiatedTarget=Instantiate(target,spawnPoint,Quaternion.identity);
                 isInstantiated=true;
             }
-            yoffset=instantiatedTarget.transform.position.y;        
-            speed=instantiatedTarget.transform.position.x; 
-            transform.position= new Vector3(speed+offset,ypos+yoffset*0.2f,zoom);  
+            yPlayerPos=instantiatedTarget.transform.position.y;        
+            xPlayerPos=instantiatedTarget.transform.position.x;
+            Vector3 playerPos= new Vector3(xPlayerPos,yPlayerPos-yoffset,zoom); 
+            transform.position= Vector3.Lerp(transform.position,playerPos,0.1f);  
 
         }
 //============INTRO=======================================================
 //=================================================================================        
         else{ 
             ypos-=0.6f;      
-            transform.position= new Vector3(train.transform.position.x+offset,ypos,zoom);
+            transform.position= new Vector3(train.transform.position.x+xoffset,ypos,zoom);
             if (ypos<=1f)
             {
                 ypos=1f;
