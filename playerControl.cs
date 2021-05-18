@@ -10,6 +10,11 @@ public class playerControl : MonoBehaviour {
 	public float speed;
 	public float jumpHeight;
 	public GameObject camControl;
+	//================MATERIAL VARS==============================================================
+    public Material shadeNORMAL;
+    public Material shadeFIRE;
+    Renderer rend;
+	//===========================================================================
 
 
 
@@ -25,6 +30,8 @@ public class playerControl : MonoBehaviour {
 	void Start() {
 		myAnim=GetComponent<Animator>();
 		myRB=GetComponent<Rigidbody>();
+		rend=GetComponent<Renderer>();
+		rend.material = shadeNORMAL;
 	}
 
 	void FixedUpdate() {
@@ -63,8 +70,16 @@ public class playerControl : MonoBehaviour {
    		void OnTriggerEnter(Collider other) {
 			if(other.CompareTag("coin")){
 				Destroy(other.gameObject);
-				speed+=0.1f;
-
+				if(speed<50){
+					speed+=0.1f;
+					myAnim.speed+=0.0001f;
+				}
+				if(speed>50){
+					speed+=0.2f;
+					//====MATERIAL EVENT=======================================================
+					rend.material.Lerp(shadeNORMAL, shadeFIRE, 9f);
+				}
+				
 			}
 		}
 }
