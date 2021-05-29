@@ -8,15 +8,12 @@ public class dayTime : MonoBehaviour
     public Transform stars;
     public Vector3 epicicle;
     public GameObject sky;
-    SpriteRenderer skyParalax;
+    public float skyParalax;
     public float dayToDay;
     public GameObject sun;
     public Vector3 sunRotation;
     public GameObject moon;
     public Vector3 moonRotation;
-    void Start(){
-        skyParalax=sky.GetComponent<SpriteRenderer>();
-        }
 
     void FixedUpdate(){
         //===============STARS ROTATIONS=================================
@@ -24,10 +21,10 @@ public class dayTime : MonoBehaviour
         sun.transform.Rotate(sunRotation);    
         moon.transform.Rotate(moonRotation);    
         //===============DAY AND SEASONS=================================
-        Debug.Log(sun.transform.rotation.z);
-        if(sky.transform.position.y >7200){
-            sky.transform.Translate((Vector3.up*skyParalax.bounds.size.y)*-1.8f,Space.World);
+        if(System.Math.Abs(sun.transform.rotation.z) <0.001f){
+            sky.transform.position=new Vector3(sky.transform.position.x,skyParalax,sky.transform.position.z);
         }
         sky.transform.Translate(Vector3.up * Time.deltaTime*dayToDay, Space.World);
+
     }
 }
