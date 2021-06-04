@@ -7,7 +7,8 @@ public class dayTime : MonoBehaviour
 {
 //============PUBLIC BACKGRAOUND OBJ's========================
     public float globalSync=1f;
-    public Transform stars;
+    public GameObject stars;
+    public Renderer starsColor;
     public Vector3 epicicle;
     public GameObject sky;
     public float skyParalax;
@@ -24,6 +25,7 @@ public class dayTime : MonoBehaviour
     for(float k = 0.1f; k<glowTop; k+=glowSpeed*globalSync)
       {
         sunLight.intensity=k;
+        starsColor.material.color = Color.Lerp(Color.white,Color.clear,k);
         yield return new WaitForSeconds(0.01f);
       }
     }
@@ -39,7 +41,7 @@ public class dayTime : MonoBehaviour
         //===============FIXED VARIABLES=================================
         float absSunRot=Convert.ToSingle(Math.Abs(sun.transform.rotation.z));
         //===============STARS ROTATIONS=================================
-        stars.Rotate(epicicle*globalSync);    
+        stars.transform.Rotate(epicicle*globalSync);    
         sun.transform.Rotate(sunRotation*globalSync);    
         moon.transform.Rotate(moonRotation*globalSync);    
         //===============DAY AND SEASONS=================================
@@ -50,6 +52,7 @@ public class dayTime : MonoBehaviour
         sky.transform.Translate(Vector3.up * Time.deltaTime*dayToDay*globalSync, Space.World);        
         if(absSunRot>0.999999f){
             StartCoroutine("FallShine");
+            starsColor.material.color = Color.Lerp(Color.clear,Color.white,Time.time*0.2f);
         }
     }
 }
