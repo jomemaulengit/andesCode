@@ -25,6 +25,7 @@ public class dayTime : MonoBehaviour
     for(float k = 0.1f; k<glowTop; k+=glowSpeed*globalSync)
       {
         sunLight.intensity=k;
+        sunLight.color = Color.Lerp(Color.blue,Color.white,k);
         starsColor.material.color = Color.Lerp(Color.white,Color.clear,k);
         yield return new WaitForSeconds(0.01f);
       }
@@ -39,6 +40,7 @@ public class dayTime : MonoBehaviour
     IEnumerator StarFade(){
     for(float k = 0.1f; k<glowTop; k+=glowSpeed*globalSync)
       {
+        sunLight.color = Color.Lerp(Color.white,Color.blue,k);
         starsColor.material.color = Color.Lerp(Color.clear,Color.white,k);
         yield return new WaitForSeconds(0.01f);
       }
