@@ -36,7 +36,13 @@ public class dayTime : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
       }
     }
-
+    IEnumerator StarFade(){
+    for(float k = 0.1f; k<glowTop; k+=glowSpeed*globalSync)
+      {
+        starsColor.material.color = Color.Lerp(Color.clear,Color.white,k);
+        yield return new WaitForSeconds(0.01f);
+      }
+    }
     void FixedUpdate(){
         //===============FIXED VARIABLES=================================
         float absSunRot=Convert.ToSingle(Math.Abs(sun.transform.rotation.z));
@@ -47,12 +53,14 @@ public class dayTime : MonoBehaviour
         //===============DAY AND SEASONS=================================
         if(absSunRot <0.001f){
             sky.transform.position=new Vector3(sky.transform.position.x,skyParalax,sky.transform.position.z);
+            StopCoroutine("StarFade");
             StartCoroutine("DawnShine");
         }
         sky.transform.Translate(Vector3.up * Time.deltaTime*dayToDay*globalSync, Space.World);        
         if(absSunRot>0.999999f){
+            StopCoroutine("DawnShine");
             StartCoroutine("FallShine");
-            starsColor.material.color = Color.Lerp(Color.clear,Color.white,Time.time*0.2f);
+            StartCoroutine("StarFade");
         }
     }
 }
