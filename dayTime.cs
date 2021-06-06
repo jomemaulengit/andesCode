@@ -7,20 +7,24 @@ public class dayTime : MonoBehaviour
 {
 //============PUBLIC BACKGRAOUND OBJ's========================
     public float globalSync=1f;
+    //==============STARS==============
     public GameObject stars;
     public Renderer starsColor;
     public Vector3 epicicle;
+    //==============SKY==================
     public GameObject sky;
     public float skyParalax;
     public float dayToDay;
+    //===============SUN=================
     public GameObject sun;
     public Light sunLight;
     public float glowTop=1f;
     public float glowSpeed=0.01f;
     public Vector3 sunRotation;
+    //===============MOON==================
     public GameObject moon;
     public Vector3 moonRotation;
-    //===================Coroutines=========================================
+    //===================Coroutines================================================
     IEnumerator DawnShine(){
     for(float k = 0.1f; k<glowTop; k+=glowSpeed*globalSync)
       {
@@ -53,12 +57,14 @@ public class dayTime : MonoBehaviour
         sun.transform.Rotate(sunRotation*globalSync);    
         moon.transform.Rotate(moonRotation*globalSync);    
         //===============DAY AND SEASONS=================================
+        //===============DAWN
         if(absSunRot <0.001f){
             sky.transform.position=new Vector3(sky.transform.position.x,skyParalax,sky.transform.position.z);
             StopCoroutine("StarFade");
             StartCoroutine("DawnShine");
         }
         sky.transform.Translate(Vector3.up * Time.deltaTime*dayToDay*globalSync, Space.World);        
+        //===============FALL
         if(absSunRot>0.999999f){
             StopCoroutine("DawnShine");
             StartCoroutine("FallShine");
