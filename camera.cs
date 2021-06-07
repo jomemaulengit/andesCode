@@ -6,13 +6,14 @@ public class camera : MonoBehaviour
 {
     //===================PUBLIC VARIABLES===================================
     //===================PRIVATE VARIABLES==================================
-    transformBehavior component;
+    transformBehavior moves;
     void Start(){
-        component=GetComponent<transformBehavior>();
+        moves=GetComponent<transformBehavior>();
     }
 
     void FixedUpdate()
     {
-        Debug.Log(component.target);
+    //===================INTRO===============================================
+
     }
 }
