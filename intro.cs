@@ -7,12 +7,20 @@ public class intro : MonoBehaviour
 {
     // =========================PUBLIC VARIABLES===================================
     public bool introIsOver=false;
+    public bool isInstantiated=false;
     public new transformBehavior camera;
     public Image image;
     public Sprite title;
     public Text text;
     public float yoffsetSpeed;
     public float fadeRatio;
+    //==========================PLAYER SPAWN========================================
+    public GameObject player;
+    public Vector3 spawnPoint;
+    public Quaternion spawnRotation;
+    public Transform train;
+    GameObject instancePlayer;
+    Vector3 rotation;
     //==========================COROUTINES=========================================
     IEnumerator IntroPos(){
         for(float g =150f; g>=0f; g-=yoffsetSpeed){
@@ -47,15 +55,23 @@ public class intro : MonoBehaviour
     {
      StartCoroutine("IntroPos");   
      StartCoroutine("FadeIn");   
+     rotation=new Vector3 (0,90,0);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     { 
+    //==========================ENABLE PLAYER TO SPAWN=================================================
      if(camera.yOff>=-0.0001f){
          StopCoroutine("IntroPos");
          camera.yOff=0f;
          text.color= new Color(0,0,0,text.color.a+0.06f);
+         spawnPoint=new Vector3(train.transform.position.x-150,player.transform.position.y,player.transform.position.z);
      }
-    }
+    if(camera.yOff>=-0.0001f && Input.GetKey(KeyCode.S) && isInstantiated==false){
+        instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
+        instancePlayer.transform.Rotate(rotation);
+        camera.target=instancePlayer;
+        isInstantiated=true;
+    }    
+ }
 }
