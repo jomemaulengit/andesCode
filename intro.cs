@@ -17,9 +17,9 @@ public class intro : MonoBehaviour
     //==========================PLAYER SPAWN========================================
     public GameObject player;
     public Vector3 spawnPoint;
-    public Quaternion spawnRotation;
     public Transform train;
-    GameObject instancePlayer;
+    [System.NonSerialized]
+    public GameObject instancePlayer;
     Vector3 rotation;
     //==========================COROUTINES=========================================
     IEnumerator IntroPos(){
@@ -65,13 +65,17 @@ public class intro : MonoBehaviour
          StopCoroutine("IntroPos");
          camera.yOff=0f;
          text.color= new Color(0,0,0,text.color.a+0.06f);
-         spawnPoint=new Vector3(train.transform.position.x-150,player.transform.position.y,player.transform.position.z);
+         spawnPoint=new Vector3(train.transform.position.x-200,player.transform.position.y,player.transform.position.z);
      }
     if(camera.yOff>=-0.0001f && Input.GetKey(KeyCode.S) && isInstantiated==false){
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
-        camera.target=instancePlayer;
+    //==========================MODIFIYNG CANVAS ON GAME START================================================
+        camera.enabled=false;
+        Destroy(image);
+        Destroy(text);
         isInstantiated=true;
+        this.enabled=false;
     }    
  }
 }
