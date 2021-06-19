@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class intro : MonoBehaviour
 {
     // =========================PUBLIC VARIABLES===================================
+    public Transform spawner;
+    public GameObject obA;
+//========================================================================================
     public bool introIsOver=false;
     public bool isInstantiated=false;
     public new transformBehavior camera;
@@ -17,10 +20,12 @@ public class intro : MonoBehaviour
     //==========================PLAYER SPAWN========================================
     public GameObject player;
     public Vector3 spawnPoint;
-    public Transform train;
+    public GameObject train;
     [System.NonSerialized]
     public GameObject instancePlayer;
     Vector3 rotation;
+    GameObject obAInstance;
+
     //==========================COROUTINES=========================================
     IEnumerator IntroPos(){
         for(float g =150f; g>=0f; g-=yoffsetSpeed){
@@ -68,6 +73,7 @@ public class intro : MonoBehaviour
          spawnPoint=new Vector3(train.transform.position.x-200,player.transform.position.y,player.transform.position.z);
      }
     if(camera.yOff>=-0.0001f && Input.GetKey(KeyCode.S) && isInstantiated==false){
+        obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
     //==========================MODIFIYNG CANVAS ON GAME START================================================
@@ -75,6 +81,8 @@ public class intro : MonoBehaviour
         Destroy(image);
         Destroy(text);
         isInstantiated=true;
+        train.GetComponent<transformBehavior>().target=instancePlayer;
+        train.GetComponent<transformBehavior>().speed=1.8f;
         this.enabled=false;
     }    
  }

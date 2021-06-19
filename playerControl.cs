@@ -13,7 +13,7 @@ public class playerControl : MonoBehaviour
 //=============================JUMP VARIABLES========================================
 	bool grounded=false; 
 	Collider[] groundCollision; 
-	float groundCheckRadius = 0.2f;
+	float groundCheckRadius = 3f; //modify 
 	public LayerMask groundLayer; 
 	public Transform groundCheck;
 	private float timer=0;

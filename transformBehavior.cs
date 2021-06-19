@@ -11,9 +11,11 @@ public class transformBehavior : MonoBehaviour
     public float xOff;
     public float yOff;
     public bool selfMove=false;
+    float distance;
     void FixedUpdate()
     {
         //====================FIXED VARIABLES=====================================
+        distance = Vector3.Distance(transform.position,target.transform.position);
         float x=target.transform.position.x;
         float y=transform.position.y;
         float z=transform.position.z;
@@ -23,6 +25,9 @@ public class transformBehavior : MonoBehaviour
         }
         else{
             transform.position= new Vector3(x+xOff,y+yOff,z);
+        }
+        if(distance>1000){
+            transform.Translate(-400f,0,0);
         }
     }
 }
