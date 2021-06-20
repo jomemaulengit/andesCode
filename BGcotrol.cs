@@ -6,6 +6,8 @@ using UnityEngine;
 public class BGcotrol : MonoBehaviour
 {
     //=================PUBLIC VARIABLES=================================
+    public Sprite[] trains;
+    public GameObject train;
     public Transform spawner;
     public GameObject obA;
     public SpriteRenderer layer0;
@@ -33,5 +35,11 @@ public class BGcotrol : MonoBehaviour
         Destroy(other.gameObject);
         obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
     }
- }
+    if(other.CompareTag("train")){
+        int i=0;
+        other.transform.Translate(3000,0,0);
+        other.GetComponent<SpriteRenderer>().sprite=trains[i];
+        i++;
+    }
+  }
 }

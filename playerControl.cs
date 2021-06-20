@@ -7,13 +7,15 @@ public class playerControl : MonoBehaviour
 //==============================PUBLIC VARIABLES============================================
 	public float speed;
 	public float jumpHeight;
-//==============================COMPONENTS===================================
+//==============================COMPONENTS PRIVATES & INSTANCES===================================
     Animator myAnim;
     Rigidbody myRB;
+	Vector3 pointA;
+	Vector3 pointB;
 //=============================JUMP VARIABLES========================================
 	bool grounded=false; 
 	Collider[] groundCollision; 
-	float groundCheckRadius = 3f; //modify 
+	public float groundCheckRadius = 3f; //modify 
 	public LayerMask groundLayer; 
 	public Transform groundCheck;
 	private float timer=0;
@@ -39,7 +41,10 @@ public class playerControl : MonoBehaviour
 			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ  | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
 		}  
     //=======================COLLISION EVENTS=====================================
-    	groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);
+		pointA= groundCheck.position;
+		pointB= new Vector3(groundCheck.position.x,groundCheck.position.y,groundCheck.position.z-9f);
+
+    	groundCollision = Physics.OverlapCapsule(pointA,pointB,groundCheckRadius,groundLayer);
 		if (groundCollision.Length > 0) {
 			grounded = true;
 			timer=0;   
