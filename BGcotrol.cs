@@ -9,7 +9,7 @@ public class BGcotrol : MonoBehaviour
     public Sprite[] trains;
     public GameObject train;
     public Transform spawner;
-    public GameObject obA;
+    public GameObject[] objs;
     public SpriteRenderer layer0;
     float layer0jump;
     public SpriteRenderer layerb4;
@@ -33,7 +33,9 @@ public class BGcotrol : MonoBehaviour
     }
     if(other.CompareTag("OB")){
         Destroy(other.gameObject);
-        obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
+        if(GameObject.FindGameObjectsWithTag("OB").Length<=1){
+            obAInstance=Instantiate(objs[Random.Range(0,objs.Length)],spawner.position,Quaternion.identity);
+        }
     }
     if(other.CompareTag("train")){
         int i=0;

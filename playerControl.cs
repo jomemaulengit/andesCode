@@ -7,6 +7,7 @@ public class playerControl : MonoBehaviour
 //==============================PUBLIC VARIABLES============================================
 	public float speed;
 	public float jumpHeight;
+	public int coins;
 //==============================COMPONENTS PRIVATES & INSTANCES===================================
     Animator myAnim;
     Rigidbody myRB;
@@ -19,18 +20,27 @@ public class playerControl : MonoBehaviour
 	public LayerMask groundLayer; 
 	public Transform groundCheck;
 	private float timer=0;
-
-
     void Start()
     {
         myRB=GetComponent<Rigidbody>();
         myAnim=GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+//===========================TRIGGERS=====================================================
+	void OnTriggerEnter(Collider other) {
+	if(other.CompareTag("coin")){
+		Destroy(other.gameObject);
+		coins+=1;
+		if(speed<100){
+			speed+=0.25f;
+		}
+	}
+	}
+//===========================COROUTINES====================================================
     void FixedUpdate()
     { 
     //========================MOVE FORWARD=====================================
+		// myAnim.speed=speed*0.03f;
         myRB.velocity=new Vector3(speed,myRB.velocity.y,0);
 		if (grounded==true)
 		{
