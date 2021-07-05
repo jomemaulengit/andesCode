@@ -76,6 +76,7 @@ public class intro : MonoBehaviour
         obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
+        instancePlayer.GetComponent<playerControl>().cam=this.transform.parent.gameObject;
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
         Destroy(image);

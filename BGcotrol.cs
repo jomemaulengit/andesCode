@@ -7,6 +7,7 @@ public class BGcotrol : MonoBehaviour
 {
     //=================PUBLIC VARIABLES=================================
     public Sprite[] trains;
+    int i=0;                     //<<<<train sprites index
     public GameObject train;
     public Transform spawner;
     public GameObject[] objs;
@@ -38,10 +39,15 @@ public class BGcotrol : MonoBehaviour
         }
     }
     if(other.CompareTag("train")){
-        int i=0;
         other.transform.Translate(3000,0,0);
         other.GetComponent<SpriteRenderer>().sprite=trains[i];
+        if(i<4){
         i++;
+        }
+        else{
+        i=4;
+        }
+        Debug.Log(i);
     }
   }
 }

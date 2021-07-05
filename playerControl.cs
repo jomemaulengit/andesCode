@@ -8,6 +8,7 @@ public class playerControl : MonoBehaviour
 	public float speed;
 	public float jumpHeight;
 	public int coins;
+	public GameObject cam;
 //==============================COMPONENTS PRIVATES & INSTANCES===================================
     Animator myAnim;
     Rigidbody myRB;
@@ -28,19 +29,21 @@ public class playerControl : MonoBehaviour
 
 //===========================TRIGGERS=====================================================
 	void OnTriggerEnter(Collider other) {
-	if(other.CompareTag("coin")){
-		Destroy(other.gameObject);
-		coins+=1;
-		if(speed<100){
-			speed+=0.25f;
+		if(other.CompareTag("coin")){
+			Destroy(other.gameObject);
+			coins+=1;
+			if(speed<100){
+				speed+=0.25f;
+			}
 		}
-	}
+		if(other.CompareTag("Zoom")){
+			cam.GetComponent<camera>().flag = true;
+		}
 	}
 //===========================COROUTINES====================================================
     void FixedUpdate()
     { 
     //========================MOVE FORWARD=====================================
-		// myAnim.speed=speed*0.03f;
         myRB.velocity=new Vector3(speed,myRB.velocity.y,0);
 		if (grounded==true)
 		{
