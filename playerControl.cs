@@ -39,6 +39,9 @@ public class playerControl : MonoBehaviour
 		if(other.CompareTag("Zoom")){
 			cam.GetComponent<camera>().flag = true;
 		}
+		if(other.CompareTag("zoomout")){
+			cam.GetComponent<camera>().flag = false;
+		}
 	}
 //===========================COROUTINES====================================================
     void FixedUpdate()
