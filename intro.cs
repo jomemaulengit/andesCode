@@ -15,6 +15,7 @@ public class intro : MonoBehaviour
     public Image image;
     public Sprite title;
     public Text text;
+    public GameObject tip;
     public float yoffsetSpeed;
     public float fadeRatio;
     //==========================PLAYER SPAWN========================================
@@ -76,11 +77,12 @@ public class intro : MonoBehaviour
         obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
-        instancePlayer.GetComponent<playerControl>().cam=this.transform.parent.gameObject;
+        instancePlayer.GetComponent<playerControl>().cam = this.transform.parent.gameObject;
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
         Destroy(image);
         Destroy(text);
+        tip.GetComponent<tipfade>().enabled =true;
         isInstantiated=true;
         train.GetComponent<transformBehavior>().target=instancePlayer;
         train.GetComponent<transformBehavior>().speed=1.8f;

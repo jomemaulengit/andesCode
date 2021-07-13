@@ -8,7 +8,6 @@ public class camera : MonoBehaviour
 public transformBehavior moves;
 public intro canvasControl;
 public bool flag = false;
-// public float zOffset=100;
 //===================LERP VARIABLES================================================================
 public Vector3 offsetVectors;
 public float smoothness;
@@ -21,6 +20,7 @@ IEnumerator ZoomIn(){
         if(flag==false){
           targetXYZ= Vector3.Lerp(targetXYZ,offsetVectors,1);
           offsetVectors.z=-(playerC.speed)-100;
+          offsetVectors.y=-13f;
         }
         else if(flag==true){
           StartCoroutine("ZoomOut");
@@ -32,6 +32,7 @@ IEnumerator ZoomOut(){
         if(flag==true){
           targetXYZ= Vector3.Lerp(targetXYZ,offsetVectors,1);
           offsetVectors.z=-(playerC.speed)-300;
+          offsetVectors.y=-22f;
         }
         else if(flag==false){
           StartCoroutine("ZoomIn");
