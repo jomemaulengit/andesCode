@@ -1,52 +1,53 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-
-public class playerControl : MonoBehaviour {
-    //global variables
-    Animator myAnim;
-    Rigidbody myRB;
+public class playerControl : MonoBehaviour
+{
+//==============================PUBLIC VARIABLES============================================
 	public float speed;
 	public float jumpHeight;
-	public GameObject camControl;
-	//================MATERIAL VARS==============================================================
-    public Material shadeNORMAL;
-    public Material shadeFIRE;
-    Renderer rend;
-	//===========================================================================
-
-
-
-	//jump
+	public int coins;
+	public GameObject cam;
+//==============================COMPONENTS PRIVATES & INSTANCES===================================
+    Animator myAnim;
+    Rigidbody myRB;
+	Vector3 pointA;
+	Vector3 pointB;
+//=============================JUMP VARIABLES========================================
 	bool grounded=false; 
 	Collider[] groundCollision; 
-	float groundCheckRadius = 0.2f;
+	public float groundCheckRadius = 3f; //modify 
 	public LayerMask groundLayer; 
 	public Transform groundCheck;
 	private float timer=0;
+    void Start()
+    {
+        myRB=GetComponent<Rigidbody>();
+        myAnim=GetComponent<Animator>();
+    }
 
-
-	void Start() {
-		myAnim=GetComponent<Animator>();
-		myRB=GetComponent<Rigidbody>();
-		rend=GetComponent<Renderer>();
-		rend.material = shadeNORMAL;
-	}
-
-	void FixedUpdate() {
-		//for collisions
-		groundCollision = Physics.OverlapSphere(groundCheck.position,groundCheckRadius,groundLayer);
-		if (groundCollision.Length > 0) {
-			grounded = true;
-			timer=0;   
+//===========================TRIGGERS=====================================================
+	void OnTriggerEnter(Collider other) {
+		if(other.CompareTag("coin")){
+			Destroy(other.gameObject);
+			coins+=1;
+			if(speed<100){
+				speed+=0.25f;
+			}
 		}
-		else grounded = false;
-		timer += Time.deltaTime;
-		myAnim.SetBool("grounded",grounded);
-
-		//for move forward in ground
-		myRB.velocity = new Vector3 (speed, myRB.velocity.y, 0);
+		if(other.CompareTag("Zoom")){
+			cam.GetComponent<camera>().flag = true;
+		}
+		if(other.CompareTag("zoomout")){
+			cam.GetComponent<camera>().flag = false;
+		}
+	}
+//===========================COROUTINES====================================================
+    void FixedUpdate()
+    { 
+    //========================MOVE FORWARD=====================================
+        myRB.velocity=new Vector3(speed,myRB.velocity.y,0);
 		if (grounded==true)
 		{
 			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
@@ -55,31 +56,26 @@ public class playerControl : MonoBehaviour {
 			transform.localEulerAngles= new Vector3(0,90,0);
 			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ  | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
 		}  
+    //=======================COLLISION EVENTS=====================================
+		pointA= groundCheck.position;
+		pointB= new Vector3(groundCheck.position.x,groundCheck.position.y,groundCheck.position.z-9f);
 
-		//jump
-		myAnim.SetFloat("isUp",myRB.velocity.y);
+    	groundCollision = Physics.OverlapCapsule(pointA,pointB,groundCheckRadius,groundLayer);
+		if (groundCollision.Length > 0) {
+			grounded = true;
+			timer=0;   
+		}
+		else grounded = false;
+		timer += Time.deltaTime;
+		myAnim.SetBool("grounded",grounded);
+    //========================JUMP CONTROL=======================================
+    	myAnim.SetFloat("isUp",myRB.velocity.y);
 		if (timer<0.4f&& Input.GetKey (KeyCode.S)) {
 			myRB.velocity=new Vector3(myRB.velocity.x,jumpHeight,0);
 
 		if (grounded == false && myRB.velocity.y < 0) {
 			timer=2;
-				}
-		    }
-		}
-        //coin collections 
-   		void OnTriggerEnter(Collider other) {
-			if(other.CompareTag("coin")){
-				Destroy(other.gameObject);
-				if(speed<50){
-					speed+=0.1f;
-					myAnim.speed+=0.0001f;
-				}
-				if(speed>50){
-					speed+=0.2f;
-					//====MATERIAL EVENT=======================================================
-					rend.material.Lerp(shadeNORMAL, shadeFIRE, 9f);
-				}
-				
 			}
-		}
+		 }	
+    }
 }
