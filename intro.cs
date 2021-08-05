@@ -18,6 +18,7 @@ public class intro : MonoBehaviour
     public GameObject tip;
     public float yoffsetSpeed;
     public float fadeRatio;
+    public GameObject limiter;
     //==========================PLAYER SPAWN========================================
     public GameObject player;
     public Vector3 spawnPoint;
@@ -78,6 +79,7 @@ public class intro : MonoBehaviour
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
         instancePlayer.GetComponent<playerControl>().cam = this.transform.parent.gameObject;
+        instancePlayer.GetComponent<playerControl>().limiter = limiter;
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
         Destroy(image);

@@ -9,11 +9,13 @@ public class playerControl : MonoBehaviour
 	public float jumpHeight;
 	public int coins;
 	public GameObject cam;
+	public GameObject limiter;
 //==============================COMPONENTS PRIVATES & INSTANCES===================================
     Animator myAnim;
     Rigidbody myRB;
 	Vector3 pointA;
 	Vector3 pointB;
+	int counter;
 //=============================JUMP VARIABLES========================================
 	bool grounded=false; 
 	Collider[] groundCollision; 
@@ -44,8 +46,17 @@ public class playerControl : MonoBehaviour
 		}
 	}
 //===========================COROUTINES====================================================
+//=========================================================================================
     void FixedUpdate()
     { 
+		if(speed<40){
+			limiter.GetComponent<BGcotrol>().counter = 1;
+		}else if(speed>=40 && speed<=60){
+			limiter.GetComponent<BGcotrol>().counter = 2;
+		}else if(speed>60){
+			limiter.GetComponent<BGcotrol>().counter = 3;
+		}
+
     //========================MOVE FORWARD=====================================
         myRB.velocity=new Vector3(speed,myRB.velocity.y,0);
 		if (grounded==true)
