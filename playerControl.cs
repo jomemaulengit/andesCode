@@ -35,7 +35,7 @@ public class playerControl : MonoBehaviour
 			Destroy(other.gameObject);
 			coins+=1;
 			if(speed<100){
-				speed+=0.25f;
+				speed+=0.2f;
 			}
 		}
 		if(other.CompareTag("Zoom")){
@@ -44,17 +44,28 @@ public class playerControl : MonoBehaviour
 		if(other.CompareTag("zoomout")){
 			cam.GetComponent<camera>().flag = false;
 		}
+		if(other.CompareTag("harmful")){
+			speed=-40;
+			jumpHeight=40;
+			coins=0;
+		}
 	}
 //===========================COROUTINES====================================================
 //=========================================================================================
     void FixedUpdate()
     { 
-		if(speed<40){
+		if(speed<25){
+			speed+=1f;
+		}
+		else if(speed<40){
 			limiter.GetComponent<BGcotrol>().counter = 1;
+			jumpHeight=45;
 		}else if(speed>=40 && speed<=60){
 			limiter.GetComponent<BGcotrol>().counter = 2;
+			jumpHeight=50;
 		}else if(speed>60){
 			limiter.GetComponent<BGcotrol>().counter = 3;
+			jumpHeight=60;
 		}
 
     //========================MOVE FORWARD=====================================

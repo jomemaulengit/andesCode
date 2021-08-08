@@ -7,7 +7,7 @@ public class intro : MonoBehaviour
 {
     // =========================PUBLIC VARIABLES===================================
     public Transform spawner;
-    public GameObject obA;
+    public GameObject obA; // <<< obstacle A to start spawning routine. 
 //========================================================================================
     public bool introIsOver=false;
     public bool isInstantiated=false;
@@ -15,7 +15,7 @@ public class intro : MonoBehaviour
     public Image image;
     public Sprite title;
     public Text text;
-    public GameObject tip;
+    public GameObject tip; // <<< hint text at gamestart.
     public float yoffsetSpeed;
     public float fadeRatio;
     public GameObject limiter;
@@ -31,7 +31,7 @@ public class intro : MonoBehaviour
     //==========================COROUTINES=========================================
     IEnumerator IntroPos(){
         for(float g =150f; g>=0f; g-=yoffsetSpeed){
-            camera.yOff+=yoffsetSpeed;
+            camera.yOff+=yoffsetSpeed*0.955f;// <<<0.955f is for margin camera offset.
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -68,13 +68,13 @@ public class intro : MonoBehaviour
     void FixedUpdate()
     { 
     //==========================ENABLE PLAYER TO SPAWN=================================================
-     if(camera.yOff>=-0.0001f){
+     if(camera.yOff>=-0.006f){
          StopCoroutine("IntroPos");
          camera.yOff=0f;
          text.color= new Color(0,0,0,text.color.a+0.06f);
          spawnPoint=new Vector3(train.transform.position.x-200,player.transform.position.y,player.transform.position.z);
      }
-    if(camera.yOff>=-0.0001f && Input.GetKey(KeyCode.S) && isInstantiated==false){
+    if(camera.yOff>=-0.006f && Input.GetKey(KeyCode.S) && isInstantiated==false){
         obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
