@@ -35,11 +35,11 @@ public class playerControl : MonoBehaviour
 			Destroy(other.gameObject);
 			coins+=1;
 			if(speed<100){
-				speed+=0.2f;
+				speed+=0.1f; //<<<< how speed increment for each coin collected
 			}
 		}
 		if(other.CompareTag("Zoom")){
-			cam.GetComponent<camera>().flag = true;
+			cam.GetComponent<camera>().flag = true; //<<< camera.flag activate zoom coroutine in camera script
 		}
 		if(other.CompareTag("zoomout")){
 			cam.GetComponent<camera>().flag = false;

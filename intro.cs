@@ -60,6 +60,7 @@ public class intro : MonoBehaviour
     }
     void Start()
     {
+     Application.targetFrameRate = 60;
      StartCoroutine("IntroPos");   
      StartCoroutine("FadeIn");   
      rotation=new Vector3 (0,90,0);

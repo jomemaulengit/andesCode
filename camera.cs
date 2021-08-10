@@ -10,6 +10,7 @@ public intro canvasControl;
 public bool flag = false;
 //===================LERP VARIABLES================================================================
 public Vector3 offsetVectors;
+public float Ytest;
 public float smoothness;
 
 playerControl playerC;
@@ -20,7 +21,7 @@ IEnumerator ZoomIn(){
         if(flag==false){
           targetXYZ= Vector3.Lerp(targetXYZ,offsetVectors,1);
           offsetVectors.z=-(playerC.speed)-100;
-          offsetVectors.y=-13f;
+          offsetVectors.y=-Ytest;
         }
         else if(flag==true){
           StartCoroutine("ZoomOut");
