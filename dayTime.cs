@@ -26,7 +26,7 @@ public class dayTime : MonoBehaviour
     public Vector3 moonRotation;
     //===================Coroutines================================================
     IEnumerator DawnShine(){
-    for(float k = 0.15f; k<glowTop; k+=glowSpeed*globalSync)
+    for(float k = 0.2f; k<glowTop; k+=glowSpeed*globalSync)
       {
         sunLight.intensity=k;
         sunLight.color = Color.Lerp(Color.blue,Color.white,k);
@@ -35,7 +35,7 @@ public class dayTime : MonoBehaviour
       }
     }
     IEnumerator FallShine(){
-    for(float k = glowTop; k>0.15f; k-=glowSpeed*globalSync)
+    for(float k = glowTop; k>0.2f; k-=glowSpeed*globalSync)
       {
         sunLight.intensity=k;
         yield return new WaitForSeconds(0.01f);

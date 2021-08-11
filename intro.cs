@@ -75,7 +75,7 @@ public class intro : MonoBehaviour
          text.color= new Color(0,0,0,text.color.a+0.06f);
          spawnPoint=new Vector3(train.transform.position.x-200,player.transform.position.y,player.transform.position.z);
      }
-    if(camera.yOff>=-0.006f && Input.GetKey(KeyCode.S) && isInstantiated==false){
+    if(camera.yOff>=-0.006f && Input.GetKeyDown(KeyCode.S) && isInstantiated==false){
         obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);

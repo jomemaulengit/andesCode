@@ -34,7 +34,7 @@ public class playerControl : MonoBehaviour
 		if(other.CompareTag("coin")){
 			Destroy(other.gameObject);
 			coins+=1;
-			if(speed<100){
+			if(speed<110){
 				speed+=0.1f; //<<<< how speed increment for each coin collected
 			}
 		}
@@ -45,7 +45,7 @@ public class playerControl : MonoBehaviour
 			cam.GetComponent<camera>().flag = false;
 		}
 		if(other.CompareTag("harmful")){
-			speed=-40;
+			speed=-60;
 			jumpHeight=40;
 			coins=0;
 		}
@@ -54,16 +54,16 @@ public class playerControl : MonoBehaviour
 //=========================================================================================
     void FixedUpdate()
     { 
-		if(speed<25){
+		if(speed<40){
 			speed+=1f;
 		}
-		else if(speed<40){
+		else if(speed<60){
 			limiter.GetComponent<BGcotrol>().counter = 1;
 			jumpHeight=45;
-		}else if(speed>=40 && speed<=60){
+		}else if(speed>=60 && speed<=80){
 			limiter.GetComponent<BGcotrol>().counter = 2;
 			jumpHeight=50;
-		}else if(speed>60){
+		}else if(speed>80){
 			limiter.GetComponent<BGcotrol>().counter = 3;
 			jumpHeight=60;
 		}

@@ -7,7 +7,6 @@ public class transformBehavior : MonoBehaviour
     //==================PUBLIC OBJECTS TO MOVE
     public float speed;
     public GameObject target;
-    public float scape_limit;
     public float xOff;
     public float yOff;
     public bool selfMove=false;
