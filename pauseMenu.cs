@@ -9,7 +9,8 @@ public class pauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.pauseM.SetActive(false);        
+        this.pauseM.SetActive(false);
+        this.enabled=false;        
     }
     // pause game
     public void  pauseGame(){

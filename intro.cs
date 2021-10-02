@@ -83,6 +83,7 @@ public class intro : MonoBehaviour
         instancePlayer.GetComponent<playerControl>().limiter = limiter;
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
+        this.gameObject.GetComponent<pauseMenu>().enabled=true;
         Destroy(image);
         Destroy(text);
         tip.GetComponent<tipfade>().enabled =true;
