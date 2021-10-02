@@ -56,7 +56,6 @@ public class BGcotrol : MonoBehaviour
         else{
         i=4;
         }
-        Debug.Log(i);
     }
   }
 }

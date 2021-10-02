@@ -21,7 +21,7 @@ IEnumerator ZoomIn(){
         if(flag==false){
           targetXYZ= Vector3.Lerp(targetXYZ,offsetVectors,1);
           offsetVectors.z=-(playerC.speed)-100;
-          offsetVectors.y=-Ytest;
+          offsetVectors.y=-13;
         }
         else if(flag==true){
           StartCoroutine("ZoomOut");
@@ -32,8 +32,8 @@ IEnumerator ZoomIn(){
 IEnumerator ZoomOut(){
         if(flag==true){
           targetXYZ= Vector3.Lerp(targetXYZ,offsetVectors,1);
-          offsetVectors.z=-(playerC.speed)-300;
-          offsetVectors.y=-22f;
+          offsetVectors.z=-(playerC.speed)-230;
+          offsetVectors.y=-Ytest;
         }
         else if(flag==false){
           StartCoroutine("ZoomIn");

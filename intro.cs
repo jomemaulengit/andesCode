@@ -88,7 +88,7 @@ public class intro : MonoBehaviour
         tip.GetComponent<tipfade>().enabled =true;
         isInstantiated=true;
         train.GetComponent<transformBehavior>().target=instancePlayer;
-        train.GetComponent<transformBehavior>().speed=1.8f;
+        train.GetComponent<transformBehavior>().speed=1.7f;
         this.enabled=false;
     }    
  }
