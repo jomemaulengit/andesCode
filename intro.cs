@@ -8,11 +8,12 @@ public class intro : MonoBehaviour
     // =========================PUBLIC VARIABLES===================================
     public Transform spawner;
     public GameObject obA; // <<< obstacle A to start spawning routine. 
-//========================================================================================
+    //========================================================================================
     public bool introIsOver=false;
     public bool isInstantiated=false;
     public new transformBehavior camera;
     public Image image;
+    public Image targetImage;
     public Sprite title;
     public Text text;
     public GameObject tip; // <<< hint text at gamestart.
@@ -58,12 +59,12 @@ public class intro : MonoBehaviour
             yield return new WaitForSeconds(0.007f);
         }
     }
-    void Start()
-    {
-     Application.targetFrameRate = 60;
-     StartCoroutine("IntroPos");   
-     StartCoroutine("FadeIn");   
-     rotation=new Vector3 (0,90,0);
+    //=====================================================================================
+    void Start(){
+        Application.targetFrameRate = 60;
+        StartCoroutine("IntroPos");   
+        StartCoroutine("FadeIn");   
+        rotation=new Vector3 (0,90,0);
     }
 
     void FixedUpdate()
@@ -81,6 +82,7 @@ public class intro : MonoBehaviour
         instancePlayer.transform.Rotate(rotation);
         instancePlayer.GetComponent<playerControl>().cam = this.transform.parent.gameObject;
         instancePlayer.GetComponent<playerControl>().limiter = limiter;
+        instancePlayer.GetComponent<playerControl>().image = targetImage;
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
         this.gameObject.GetComponent<pauseMenu>().enabled=true;

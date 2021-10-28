@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerControl : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class playerControl : MonoBehaviour
 	public int coins;
 	public GameObject cam;
 	public GameObject limiter;
+	public Image image;
 //==============================COMPONENTS PRIVATES & INSTANCES===================================
     Animator myAnim;
     Rigidbody myRB;
@@ -23,11 +26,22 @@ public class playerControl : MonoBehaviour
 	public LayerMask groundLayer; 
 	public Transform groundCheck;
 	private float timer=0;
+//===========================COROUTINES====================================================
+    IEnumerator FadeOut(){
+        for(float fo =0f; fo<255f; fo+=0.1f){
+            image.color=new Color(0,0,0,fo);
+			if(image.color.a>=0.98f)
+			SceneManager.LoadScene(0);
+            yield return new WaitForSeconds(0.007f);
+        }
+    }
+	//======================================================================================
     void Start()
     {
         myRB=GetComponent<Rigidbody>();
         myAnim=GetComponent<Animator>();
     }
+
 
 //===========================TRIGGERS=====================================================
 	void OnTriggerEnter(Collider other) {
@@ -35,7 +49,7 @@ public class playerControl : MonoBehaviour
 			Destroy(other.gameObject);
 			coins+=1;
 			if(speed<110){
-				speed+=0.1f; //<<<< how speed increment for each coin collected
+				speed+=0.4f; //<<<< how speed increment for each coin collected
 			}
 		}
 		if(other.CompareTag("Zoom")){
@@ -49,8 +63,10 @@ public class playerControl : MonoBehaviour
 			jumpHeight=40;
 			coins=0;
 		}
+		if(other.CompareTag("dead")){
+			StartCoroutine("FadeOut");
+		}
 	}
-//===========================COROUTINES====================================================
 //=========================================================================================
     void FixedUpdate()
     { 
