@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class pauseMenu : MonoBehaviour
 {
     public GameObject pauseM;
+    public Image image;
     private bool isPaused=false;
     // Start is called before the first frame update
     void Start()
@@ -12,33 +15,51 @@ public class pauseMenu : MonoBehaviour
         this.pauseM.SetActive(false);
         this.enabled=false;        
     }
-    // pause game
+    // ============================PUBLIC FUNCTIONS====================================================
     public void  pauseGame(){
-        if(Input.GetKeyDown(KeyCode.Tab)){
-            Debug.Log("pause");
             isPaused=true;
             this.pauseM.SetActive(true);
             Time.timeScale=0f;
-        }
     }
     public void resumeGame(){
-        if(Input.GetKeyDown(KeyCode.Tab)){
-            Debug.Log("resume");
             isPaused=false;
             this.pauseM.SetActive(false);
             Time.timeScale=1f;
+    }
+
+    public void quitGame(){
+            this.resumeGame();
+            Application.Quit();
+    }
+
+    public void restartGame(){
+            this.resumeGame();
+            StartCoroutine("FadeOut");
+    }
+
+    // ==============COROUTINES=======================================================
+        IEnumerator FadeOut(){
+        for(float fo =0f; fo<255f; fo+=0.1f){
+            image.color=new Color(0,0,0,fo);
+			if(image.color.a>=0.98f)
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            yield return new WaitForSeconds(0.007f);
         }
     }
 
-    // Update is called once per frame
+    // ==============UPDATE===========================================================
     void Update()
     {
         if(isPaused==false){
-            this.pauseGame();
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                this.pauseGame();
+            }
         }
         else
         {
-            this.resumeGame();
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                this.resumeGame();
+            }
         }
     }
 }

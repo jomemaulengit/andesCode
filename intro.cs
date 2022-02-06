@@ -32,7 +32,7 @@ public class intro : MonoBehaviour
     //==========================COROUTINES=========================================
     IEnumerator IntroPos(){
         for(float g =150f; g>=0f; g-=yoffsetSpeed){
-            camera.yOff+=yoffsetSpeed*0.955f;// <<<0.955f is for margin camera offset.
+            camera.yOff+=yoffsetSpeed*0.92f;// <<<0.955f is for margin camera offset.
             yield return new WaitForSeconds(0.1f);
         }
     }
