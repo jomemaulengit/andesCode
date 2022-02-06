@@ -18,6 +18,7 @@ public class playerControl : MonoBehaviour
     Rigidbody myRB;
 	Vector3 pointA;
 	Vector3 pointB;
+	AudioSource footSteps;
 	int counter;
 //=============================JUMP VARIABLES========================================
 	bool grounded=false; 
@@ -40,17 +41,20 @@ public class playerControl : MonoBehaviour
     {
         myRB=GetComponent<Rigidbody>();
         myAnim=GetComponent<Animator>();
+		this.footSteps=GetComponent<AudioSource>();
     }
 
 
 //===========================TRIGGERS=====================================================
 	void OnTriggerEnter(Collider other) {
 		if(other.CompareTag("coin")){
-			Destroy(other.gameObject);
+			other.gameObject.GetComponent<coinBH>().playCoinSound();
 			coins+=1;
 			if(speed<110){
 				speed+=0.4f; //<<<< how speed increment for each coin collected
 			}
+			other.gameObject.GetComponent<MeshRenderer>().enabled=false;
+			other.gameObject.GetComponent<BoxCollider>().enabled=false;
 		}
 		if(other.CompareTag("Zoom")){
 			cam.GetComponent<camera>().flag = true; //<<< camera.flag activate zoom coroutine in camera script
@@ -91,6 +95,7 @@ public class playerControl : MonoBehaviour
 			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
 		}else
 		{
+			footSteps.Play();
 			transform.localEulerAngles= new Vector3(0,90,0);
 			myRB.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ  | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
 		}  
