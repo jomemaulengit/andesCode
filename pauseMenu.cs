@@ -42,7 +42,7 @@ public class pauseMenu : MonoBehaviour
         for(float fo =0f; fo<255f; fo+=0.1f){
             image.color=new Color(0,0,0,fo);
 			if(image.color.a>=0.98f)
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			SceneManager.LoadScene(1);
             yield return new WaitForSeconds(0.007f);
         }
     }
