@@ -9,14 +9,18 @@ public class pauseMenu : MonoBehaviour
     public GameObject pauseM;
     public Image image;
     private bool isPaused=false;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("coinst");
         this.pauseM.SetActive(false);
         this.enabled=false;        
     }
     // ============================PUBLIC FUNCTIONS====================================================
     public void  pauseGame(){
+            player = GameObject.FindGameObjectWithTag("coinst");
+            player.GetComponent<AudioSource>().Pause();
             isPaused=true;
             this.pauseM.SetActive(true);
             Time.timeScale=0f;
@@ -42,7 +46,7 @@ public class pauseMenu : MonoBehaviour
         for(float fo =0f; fo<255f; fo+=0.1f){
             image.color=new Color(0,0,0,fo);
 			if(image.color.a>=0.98f)
-			SceneManager.LoadScene(1);
+			SceneManager.LoadScene(0);
             yield return new WaitForSeconds(0.007f);
         }
     }

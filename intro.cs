@@ -86,7 +86,7 @@ public class intro : MonoBehaviour
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
         this.gameObject.GetComponent<pauseMenu>().enabled=true;
-        Destroy(image);
+        image.color = new Color(255,255,255,0);
         Destroy(text);
         tip.GetComponent<tipfade>().enabled =true;
         isInstantiated=true;
