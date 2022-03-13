@@ -7,17 +7,19 @@ public class intro : MonoBehaviour
 {
     // =========================PUBLIC VARIABLES===================================
     public Transform spawner;
-    public GameObject obA;
-//========================================================================================
+    public GameObject obA; // <<< obstacle A to start spawning routine. 
+    //========================================================================================
     public bool introIsOver=false;
     public bool isInstantiated=false;
     public new transformBehavior camera;
     public Image image;
+    public Image targetImage;
     public Sprite title;
     public Text text;
-    public GameObject tip;
+    public GameObject tip; // <<< hint text at gamestart.
     public float yoffsetSpeed;
     public float fadeRatio;
+    public GameObject limiter;
     //==========================PLAYER SPAWN========================================
     public GameObject player;
     public Vector3 spawnPoint;
@@ -30,7 +32,7 @@ public class intro : MonoBehaviour
     //==========================COROUTINES=========================================
     IEnumerator IntroPos(){
         for(float g =150f; g>=0f; g-=yoffsetSpeed){
-            camera.yOff+=yoffsetSpeed;
+            camera.yOff+=yoffsetSpeed*0.92f;// <<<0.955f is for margin camera offset.
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -57,35 +59,39 @@ public class intro : MonoBehaviour
             yield return new WaitForSeconds(0.007f);
         }
     }
-    void Start()
-    {
-     StartCoroutine("IntroPos");   
-     StartCoroutine("FadeIn");   
-     rotation=new Vector3 (0,90,0);
+    //=====================================================================================
+    void Start(){
+        Application.targetFrameRate = 60;
+        StartCoroutine("IntroPos");   
+        StartCoroutine("FadeIn");   
+        rotation=new Vector3 (0,90,0);
     }
 
     void FixedUpdate()
     { 
     //==========================ENABLE PLAYER TO SPAWN=================================================
-     if(camera.yOff>=-0.0001f){
+     if(camera.yOff>=-0.006f){
          StopCoroutine("IntroPos");
          camera.yOff=0f;
          text.color= new Color(0,0,0,text.color.a+0.06f);
          spawnPoint=new Vector3(train.transform.position.x-200,player.transform.position.y,player.transform.position.z);
      }
-    if(camera.yOff>=-0.0001f && Input.GetKey(KeyCode.S) && isInstantiated==false){
+    if(camera.yOff>=-0.006f && Input.GetKeyDown(KeyCode.S) && isInstantiated==false){
         obAInstance=Instantiate(obA,spawner.position,Quaternion.identity);
         instancePlayer=Instantiate(player,spawnPoint,Quaternion.identity);
         instancePlayer.transform.Rotate(rotation);
         instancePlayer.GetComponent<playerControl>().cam = this.transform.parent.gameObject;
+        instancePlayer.GetComponent<playerControl>().limiter = limiter;
+        instancePlayer.GetComponent<playerControl>().image = targetImage;
     //==========================MODIFIYNG CANVAS ON GAME START================================================
         camera.enabled=false;
-        Destroy(image);
+        this.gameObject.GetComponent<pauseMenu>().enabled=true;
+        image.color = new Color(255,255,255,0);
         Destroy(text);
         tip.GetComponent<tipfade>().enabled =true;
         isInstantiated=true;
         train.GetComponent<transformBehavior>().target=instancePlayer;
-        train.GetComponent<transformBehavior>().speed=1.8f;
+        train.GetComponent<transformBehavior>().speed=1.7f;
         this.enabled=false;
     }    
  }

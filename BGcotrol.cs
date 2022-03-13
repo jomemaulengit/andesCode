@@ -11,6 +11,9 @@ public class BGcotrol : MonoBehaviour
     public GameObject train;
     public Transform spawner;
     public GameObject[] objs;
+    public GameObject[] mediumObjs;
+    public GameObject[] fastObjs;
+    public int counter = 1;
     public SpriteRenderer layer0;
     float layer0jump;
     public SpriteRenderer layerb4;
@@ -34,8 +37,14 @@ public class BGcotrol : MonoBehaviour
     }
     if(other.CompareTag("OB")){
         Destroy(other.gameObject);
-        if(GameObject.FindGameObjectsWithTag("OB").Length<=1){
+        if(GameObject.FindGameObjectsWithTag("OB").Length<=1 && counter==1){
             obAInstance=Instantiate(objs[Random.Range(0,objs.Length)],spawner.position,Quaternion.identity);
+        }
+        else if(GameObject.FindGameObjectsWithTag("OB").Length<=1 && counter==2){
+            obAInstance=Instantiate(mediumObjs[Random.Range(0,mediumObjs.Length)],spawner.position,Quaternion.identity);
+        }       
+        else if(GameObject.FindGameObjectsWithTag("OB").Length<=1 && counter==3){
+            obAInstance=Instantiate(fastObjs[Random.Range(0,fastObjs.Length)],spawner.position,Quaternion.identity);
         }
     }
     if(other.CompareTag("train")){
@@ -47,7 +56,6 @@ public class BGcotrol : MonoBehaviour
         else{
         i=4;
         }
-        Debug.Log(i);
     }
   }
 }
